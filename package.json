@@ -1,0 +1,21 @@
+{
+  "name": "exit-notifier-plus",
+  "version": "0.1",
+  "description": "As per compliance guidelines, provides a notice whenever someone clicks a link to another site.",
+  "main": "index.php",
+  "scripts": {
+    "gulp": "gulp",
+    "create-plugin": "gulp plugin"
+  },
+  "author": "Mike Reall",
+  "contributors": [
+    "cvs@cvstech.com"
+  ],
+  "license": "GPL-2.0 License",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-rev-all": "^2.0.3",
+    "gulp-zip": "^5.0.2"
+  }
+}

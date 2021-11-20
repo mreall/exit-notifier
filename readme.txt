@@ -1,6 +1,5 @@
-=== Exit Notifier ===
+=== Exit Notifier Plus ===
 Contributors: cvs@cvstech.com
-Donate link: http://www.cvstech.com/donate
 Tags: exit link, speed bump, external link, compliance, Credit Union
 Requires at least: 4.0
 Tested up to: 4.8
@@ -9,6 +8,8 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Provides a way to notify site users they have clicked an external link and are leaving your site.
+
+Forked from [Exit Notifier](https://github.com/WPPlugins/exit-notifier) to fix compatibility issues with other themes and plugins.
 
 == Description ==
 

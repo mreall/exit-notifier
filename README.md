@@ -1,7 +1,9 @@
-Exit Notifier
-=============
+Exit Notifier Plus
+==================
 
 As per compliance guidelines, provides a notice whenever someone clicks a link to another site.
+
+Forked from [Exit Notifier](https://github.com/WPPlugins/exit-notifier) to fix compatibility issues with other themes and plugins.
 
 ## Why this plugin?
 
