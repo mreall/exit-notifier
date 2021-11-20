@@ -111,7 +111,7 @@ class Exit_Notifier_Settings {
 		$siteurl = explode('//',get_option('siteurl'));
 		$settings['content'] = array(
 			'title'					=> __( 'Content', 'exit-notifier' ),
-			'description'			=> __( 'Define the parameters of the notification.', 'exit-notifier' ),
+			'description'			=> __( 'Define the parameters of the notification. Use {target} to include the destination URL in the text of title or body.', 'exit-notifier' ),
 			'fields'				=> array(
 				array(
 					'id' 			=> 'title_field',
@@ -124,9 +124,9 @@ class Exit_Notifier_Settings {
 				array(
 					'id' 			=> 'body_text',
 					'label'			=> __( 'Body' , 'exit-notifier' ),
-					'description'	=> __( 'This defines the body of the notification box.', 'exit-notifier' ),
+					'description'	=> __( 'This defines the body of the notification box. You can includ {target} in the body text and Exit Notifier will replace it with the destination link URL.', 'exit-notifier' ),
 					'type'			=> 'textarea',
-					'default'		=> '<p>The link you have selected is located on another server.  The linked site contains information that has been created, published, maintained, or otherwise posted by institutions or organizations independent of this organization.  We do not endorse, approve, certify, or control any linked websites, their sponsors, or any of their policies, activities, products, or services.  We do not assume responsibility for the accuracy, completeness, or timeliness of the information contained therein.  Visitors to any linked websites should not use or rely on the information contained therein until they have consulted with an independent financial professional.</p> <p>Please click “Go to URL…” to leave this website and proceed to the selected site.</p>',
+					'default'		=> '<p>The link you have selected ({target}) is located on another server.  The linked site contains information that has been created, published, maintained, or otherwise posted by institutions or organizations independent of this organization.  We do not endorse, approve, certify, or control any linked websites, their sponsors, or any of their policies, activities, products, or services.  We do not assume responsibility for the accuracy, completeness, or timeliness of the information contained therein.  Visitors to any linked websites should not use or rely on the information contained therein until they have consulted with an independent financial professional.</p> <p>Please click “Go to URL…” to leave this website and proceed to the selected site.</p>',
 					'placeholder'	=> __( 'Notifier Body', 'exit-notifier' )
 				),
 				array(
@@ -154,14 +154,80 @@ class Exit_Notifier_Settings {
 				)
 			)
 		);
+		$settings['alternatecontent'] = array(
+			'title'					=> __( 'Alternate Content', 'exit-notifier' ),
+			'description'			=> __( 'Define the parameters of the alternate notification. Use {target} to include the destination URL in the text of title or body.', 'exit-notifier' ),
+			'fields'				=> array(
+				array(
+					'id' 			=> 'alt_classname',
+					'label'			=> __( 'Class to activate alternate content' , 'exit-notifier' ),
+					'description'	=> __( '<br>This will be the class you add to a link to activate the alternate notification box. "<a href="https://somewhere.else" class="altExitNotifier">', 'exit-notifier' ),
+					'type'			=> 'text',
+					'default'		=> 'altExitNotifier',
+					'placeholder'	=> __( 'Alternate Notifier Class', 'exit-notifier' )
+				),
+				array(
+					'id' 			=> 'alt_title_field',
+					'label'			=> __( 'Alternate Title' , 'exit-notifier' ),
+					'description'	=> __( 'This will be the title of your alternate notification box.', 'exit-notifier' ),
+					'type'			=> 'text',
+					'default'		=> 'Thank you for visiting our website',
+					'placeholder'	=> __( 'Notifier Title', 'exit-notifier' )
+				),
+				array(
+					'id' 			=> 'alt_body_text',
+					'label'			=> __( 'Alternate Body' , 'exit-notifier' ),
+					'description'	=> __( 'This defines the body of the alternate notification box.', 'exit-notifier' ),
+					'type'			=> 'textarea',
+					'default'		=> '<p>The link you have selected is located on another server.  The linked site contains information that has been created, published, maintained, or otherwise posted by institutions or organizations independent of this organization.  We do not endorse, approve, certify, or control any linked websites, their sponsors, or any of their policies, activities, products, or services.  We do not assume responsibility for the accuracy, completeness, or timeliness of the information contained therein.  Visitors to any linked websites should not use or rely on the information contained therein until they have consulted with an independent financial professional.</p> <p>Please click “Go to URL…” to leave this website and proceed to the selected site.</p>',
+					'placeholder'	=> __( 'Notifier Body', 'exit-notifier' )
+				),
+				array(
+					'id' 			=> 'alt_go_button_text',
+					'label'			=> __( 'Alternate Continue Button Text' , 'exit-notifier' ),
+					'description'	=> __( 'This is the prefix of the "Go to URL..." button on the alternate notification box.', 'exit-notifier' ),
+					'type'			=> 'text',
+					'default'		=> 'Go to URL...',
+					'placeholder'	=> __( 'Go to URL...', 'exit-notifier' )
+				),
+				array(
+					'id' 			=> 'alt_include_url',
+					'label'			=> __( 'Include the URL on the alternate Go button?' , 'exit-notifier' ),
+					'description'	=> __( 'Turn this option off to leave the URL off of the button text on the alternate notification box.', 'exit-notifier' ),
+					'type'			=> 'checkbox',
+					'default'		=> 'on'
+				),
+				array(
+					'id' 			=> 'alt_cancel_button_text',
+					'label'			=> __( 'Alternate Cancel Button Text' , 'exit-notifier' ),
+					'description'	=> __( 'This is the text of the cancel button on the alternate notification box.', 'exit-notifier' ),
+					'type'			=> 'text',
+					'default'		=> 'Cancel',
+					'placeholder'	=> __( 'Cancel', 'exit-notifier' )
+				)
+			)
+		);
+		$settings['customcontent'] = array(
+			'title'					=> __( 'Custom Content', 'exit-notifier' ),
+			'description'			=> __( 'With Custom Content enabled, you can customize the title and body for each link by adding exit-notifier-title and exit-notifier-body parameters in the &lt;a&gt; tag for your links. Like this:<br><br><em>&lt;a href="link url" exit-notifier-title="Custom Exit Notifier Title" exit-notifier-body="This is a Custom Exit Notifier Body. You can include whatever you want here and it will only show up for this link."&gt;</em><br><br>FYI: Shortcodes will not work in this context, however, {target} will work."', 'exit-notifier' ),
+			'fields'				=> array(
+				array(
+					'id' 			=> 'activate_custom_content',
+					'label'			=> __( 'Activate Custom Content?', 'exit-notifier' ),
+					'description'	=> __( 'You can uncheck this box to ignore the custom content parameters. If it is checked, however, the configured content will only be overridden if the parameters exist. so it should be safe to leave this on.', 'exit-notifier' ),
+					'type'			=> 'checkbox',
+					'default'		=> 'on'
+				)
+			)
+		);
 		$settings['behavior'] = array(
-			'title'					=> __( 'Behavior', 'exit-notifier' ),
-			'description'			=> __( 'Choose when and how the notification is issued.', 'exit-notifier' ),
+			'title'					=> __( 'Anchor (&lt;a&gt;) Behavior', 'exit-notifier' ),
+			'description'			=> __( 'Choose when and how the notification is issued for &lt;a&gt; tags.', 'exit-notifier' ),
 			'fields'				=> array(
 				array(
 					'id' 			=> 'apply_to_all_offsite_links',
 					'label'			=> __( 'Apply to all offsite links?', 'exit-notifier' ),
-					'description'	=> __( 'The default behavior is to apply the exit notification to all offsite links. Uncheck this item to use the jQuery selector expression below instead.', 'exit-notifier' ),
+					'description'	=> __( 'The default behavior is to apply the exit notification to all offsite links. Uncheck this item to use the jQuery selector expression below instead.  <p>*** NOTICE *** If your liks are not working, check this box, save and reload your site. If the links then work, the problem is in your custom selector. I will gladly assist in tailoring a selctor for you, simply contact me at <a href="mailto:wpplugins@cvstech.com?subject=Custom jQuery selector in Exit Notifier">wpplugins@cvstech.com.</a></p>', 'exit-notifier' ),
 					'type'			=> 'checkbox',
 					'default'		=> 'on'
 				),
@@ -174,18 +240,54 @@ class Exit_Notifier_Settings {
 					'placeholder'	=> __( 'a[href*="//"]:not([href*="' . $siteurl[1] . '"])', 'exit-notifier' )
 				),
 				array(
-					'id' 			=> 'visual_indication',
-					'label'			=> __( 'Visually identify selected links?', 'exit-notifier' ),
-					'description'	=> __( 'Enabling this option will add a visual indication to all selected links.', 'exit-notifier' ),
-					'type'			=> 'checkbox',
-					'default'		=> ''
-				),
-				array(
 					'id' 			=> 'new_window',
 					'label'			=> __( 'Open selected links in a new window/tab.', 'exit-notifier' ),
 					'description'	=> __( 'If this option is on, all selected links will open in a new window or tab, according to the browser settings', 'exit-notifier' ),
 					'type'			=> 'checkbox',
 					'default'		=> ''
+				),
+				array(
+					'id' 			=> 'css_exclusion_class',
+					'label'			=> __( 'Exclude &lt;a&gt; links with this CSS class' , 'exit-notifier' ),
+					'description'	=> __( '<br>Apply this class to manually exclude links from Exit Notifier', 'exit-notifier' ),
+					'type'			=> 'text',
+					'default'		=> 'noExitNotifier',
+					'placeholder'	=> __( 'noExitNotifier' )
+				),
+				array(
+					'id' 			=> 'relnofollow',
+					'label'			=> __( 'Add rel="nofollow" to all external links.', 'exit-notifier' ),
+					'description'	=> __( 'If this option is on, all selected links will have rel="nofollow" added.', 'exit-notifier' ),
+					'type'			=> 'checkbox',
+					'default'		=> ''
+				)
+			)
+		);
+		$settings['formbehavior'] = array(
+			'title'					=> __( 'Form (&lt;form&gt;) Behavior', 'exit-notifier' ),
+			'description'			=> __( 'Choose when and how the notification is issued for &lt;form&gt;s. This may not work if javascript is employed to submit your form.', 'exit-notifier' ),
+			'fields'				=> array(
+				array(
+					'id' 			=> 'enable_notifier_for_forms',
+					'label'			=> __( 'Enable Exit Notifier for forms?', 'exit-notifier' ),
+					'description'	=> __( 'Exit Notifier can now alert for forms. Disabled by default due to some unexpected interactions.', 'exit-notifier' ),
+					'type'			=> 'checkbox',
+					'default'		=> ''
+				),
+				array(
+					'id' 			=> 'apply_to_all_offsite_forms',
+					'label'			=> __( 'Apply to all offsite forms?', 'exit-notifier' ),
+					'description'	=> __( 'The default behavior is to apply the exit notification to all offsite forms. Uncheck this item to use the jQuery selector expression below instead.', 'exit-notifier' ),
+					'type'			=> 'checkbox',
+					'default'		=> 'on'
+				),
+				array(
+					'id' 			=> 'jquery_form_selector_field',
+					'label'			=> __( 'jQuery form Selector' , 'exit-notifier' ),
+					'description'	=> __( '<br>Uncheck above and use this jQuery selector to determine what forms get notification instead of automatically selecting all external forms. <br>The default is: form[action*="//"]:not([action*="yourwordpressinstallation.url"])', 'exit-notifier' ),
+					'type'			=> 'text',
+					'default'		=> 'form[action*="//"]:not([action*="' . $siteurl[1] . '"])',
+					'placeholder'	=> __( 'form[action*="//"]:not([action*="' . $siteurl[1] . '"])', 'exit-notifier' )
 				)
 			)
 		);
@@ -194,31 +296,67 @@ class Exit_Notifier_Settings {
 			'description'			=> __( 'Choose how the notification should look.', 'exit-notifier' ),
 			'fields'				=> array(
 				array(
+					'id' 			=> 'sa2_or_jAlert',
+					'label'			=> __( 'SweetAlert2 or jAlert?' , 'exit-notifier' ),
+					'description'	=> __( '<ul><li>Choose whether to use:<ul><li>SweetAlert2</li><ul><li>Current and supported and accessible (NOTE: ** NONE ** of the options below apply. This will be more fully supported in the future.)</li></ul></li><li>or jAlert<ul><li>What you are already used to. More config options.</li></ul></li></ul></ul>', 'exit-notifier' ),
+					'type'			=> 'radio',
+					'options'		=> array('sa2' => 'SweetAlert2', 'jAlert' => 'jAlert'),
+					'default'		=> 'jAlert'
+				),
+				// array(
+				// 	'id' 			=> 'sa2_theme',
+				// 	'label'			=> __( 'SweetAlert2 Theme', 'exit-notifier' ),
+				// 	'description'	=> __( 'Select the visual theme for the SweetAlert2 window.', 'exit-notifier' ),
+				// 	'type'			=> 'select',
+				// 	'options'		=> array( 'default' => 'Default',
+				// 								'custom' => 'Dark',
+				// 								'green' => 'Bootstrap 4',
+				// 								'yellow' => 'Bulma',
+				// 								'black' => 'Minimal',
+				// 								'blue' => 'Borderless',
+				// 								'blue' => 'Material UI',
+				// 								'red' => 'Wordpress Admin' ),
+				// 	'default'		=> 'default'
+				// ),
+				array(
 					'id' 			=> 'theme',
 					'label'			=> __( 'Theme', 'exit-notifier' ),
-					'description'	=> __( 'Select the visual theme.', 'exit-notifier' ),
+					'description'	=> __( 'Select the visual theme for the jAlert window.', 'exit-notifier' ),
 					'type'			=> 'select',
 					'options'		=> array( 'default' => 'Default',
-												'custom' => 'Custom',
+												'red' => 'Red',
+												'dark_red' => 'Dark Red',
 												'green' => 'Green',
-												'yellow' => 'Yellow',
-												'black' => 'Black',
+												'dark_green' => 'Dark Green',
 												'blue' => 'Blue',
-												'red' => 'Red' ),
+												'dark_blue' => 'Dark Blue',
+												'yellow' => 'Yellow',
+												'brown' => 'Brown',
+												'gray' => 'Gray',
+												'dark_gray' => 'Dark Gray',
+												'black' => 'Black',
+												'custom' => 'Custom'),
 					'default'		=> 'default'
 				),
 				array(
 					'id' 			=> 'backgroundcolor',
 					'label'			=> __( 'Background Color', 'exit-notifier' ),
-					'description'	=> __( 'Controls the color of the background behind the alert (the color that covers up the rest of the page).', 'exit-notifier' ),
+					'description'	=> __( 'Controls the color of the background behind the alert (the color that covers up the rest of the page) for the jAlert window.', 'exit-notifier' ),
 					'type'			=> 'select',
 					'options'		=> array( 'black' => 'Black', 'white' => 'White' ),
 					'default'		=> 'black'
 				),
 				array(
+					'id' 			=> 'blurbackground',
+					'label'			=> __( 'Blur the background.', 'exit-notifier' ),
+					'description'	=> __( 'Setting this option will blur the content of the page behind the dialog box for the jAlert window.', 'exit-notifier' ),
+					'type'			=> 'checkbox',
+					'default'		=> ''
+				),
+				array(
 					'id' 			=> 'size',
 					'label'			=> __( 'Dialog Box Size', 'exit-notifier' ),
-					'description'	=> __( 'How large should the box be?', 'exit-notifier' ),
+					'description'	=> __( 'How large should the box be for the jAlert window?', 'exit-notifier' ),
 					'type'			=> 'select',
 					'options'		=> array(  'xsm' => 'Extra Small', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xlg' => 'Extra Large', 'full' => 'Full' ),
 					'default'		=> 'md'
@@ -226,7 +364,7 @@ class Exit_Notifier_Settings {
 				array(
 					'id' 			=> 'showAnimation',
 					'label'			=> __( 'Animation on show', 'exit-notifier' ),
-					'description'	=> __( 'Animation revealing the box.', 'exit-notifier' ),
+					'description'	=> __( 'Animation revealing the box for the jAlert window.', 'exit-notifier' ),
 					'type'			=> 'select',
 					'options'		=> array(  'none' => 'none',
 												'bounce' => 'bounce',
@@ -276,7 +414,7 @@ class Exit_Notifier_Settings {
 				array(
 					'id' 			=> 'hideAnimation',
 					'label'			=> __( 'Animation on hide', 'exit-notifier' ),
-					'description'	=> __( 'Animation hiding the box.', 'exit-notifier' ),
+					'description'	=> __( 'Animation hiding the box for the jAlert window.', 'exit-notifier' ),
 					'type'			=> 'select',
 					'options'		=> array(  'none' => 'none',
 												'bounce' => 'bounce',
@@ -323,6 +461,13 @@ class Exit_Notifier_Settings {
 												'slideOutRight' => 'slideOutRight',
 												'slideOutUp' => 'slideOutUp' ),
 					'default'		=> 'fadeOut'
+				),
+				array(
+					'id' 			=> 'visual_indication',
+					'label'			=> __( 'Visually identify selected links?', 'exit-notifier' ),
+					'description'	=> __( 'Enabling this option will add a visual indication to all selected links.', 'exit-notifier' ),
+					'type'			=> 'checkbox',
+					'default'		=> ''
 				)
 			)
 		);
@@ -346,12 +491,40 @@ class Exit_Notifier_Settings {
 					'default'		=> 'continue'
 				),
 				array(
+					'id' 			=> 'timeout_text_continue',
+					'label'			=> __( 'Customize the text in the continue timeout message.', 'exit-notifier' ),
+					'description'	=> __( 'Customize the timeout text. Use {seconds} as a placeholder for the countdown.', 'exit-notifier' ),
+					'type'			=> 'text',
+					'default'		=> 'Continue in {seconds} seconds.'
+				),
+				array(
+					'id' 			=> 'timeout_text_cancel',
+					'label'			=> __( 'Customize the text in the cancel timeout message.', 'exit-notifier' ),
+					'description'	=> __( 'Customize the timeout text. Use {seconds} as a placeholder for the countdown.', 'exit-notifier' ),
+					'type'			=> 'text',
+					'default'		=> 'Cancel in {seconds} seconds.'
+				),
+				array(
 					'id' 			=> 'timeout_seconds',
 					'label'			=> __( 'Timeout in seconds.', 'exit-notifier' ),
 					'description'	=> __( 'Set the timeout for the chosen action in seconds.', 'exit-notifier' ),
 					'type'			=> 'text',
 					'default'		=> '10'
-				)
+				),
+				array(
+					'id' 			=> 'enable_progressbar',
+					'label'			=> __( 'Enable Progress Bar?', 'exit-notifier' ),
+					'description'	=> __( 'Show a progress bar on the notifier window.', 'exit-notifier' ),
+					'type'			=> 'checkbox',
+					'default'		=> 'on'
+				),
+				array(
+					'id' 			=> 'timeout_statement',
+					'label'			=> __( 'Show timeout statement at bottom of dialog?', 'exit-notifier' ),
+					'description'	=> __( 'Inform the user what happens at the end of the timeout.', 'exit-notifier' ),
+					'type'			=> 'checkbox',
+					'default'		=> 'on'
+				),
 			)
 		);
 		$settings['customcss'] = array(
@@ -385,6 +558,58 @@ border: 3px solid #1e5799;
 	color: #ff0000;
 }"
 				),
+				array(
+					'id' 			=> 'addclasses',
+					'label'			=> __( 'Add custom CSS classes to links?', 'exit-notifier' ),
+					'description'	=> __( 'Enabling this option will add the CSS classes below to all selected links.', 'exit-notifier' ),
+					'type'			=> 'checkbox',
+					'default'		=> ''
+				),
+				array(
+					'id' 			=> 'classestoadd',
+					'label'			=> __( 'CSS classes to add to external links' , 'exit-notifier' ),
+					'description'	=> __( 'Add one or more CCS class names. Separate classes with a space.', 'exit-notifier' ),
+					'type'			=> 'text',
+					'default'		=> '',
+					'placeholder'	=> __( 'offsite warn', 'exit-notifier' )
+				)
+			)
+		);
+		$settings['debug'] = array(
+			'title'					=> __( 'Debug', 'exit-notifier' ),
+			'description'			=> __( 'Debug settings', 'exit-notifier' ),
+			'fields'				=> array(
+				array(
+					'id' 			=> 'debugtoconsole',
+					'label'			=> __( 'Send diagnostic information to console', 'exit-notifier' ),
+					'description'	=> __( 'If this option is on, helpful diagnostic information will print to the console, ' .
+						'and an alert will pause right before activating the link when you call exit_notifier_js().', 'exit-notifier' ),
+					'type'			=> 'checkbox',
+					'default'		=> ''
+				)
+			)
+		);
+		$settings['calljsdirect'] = array(
+			'title'					=> __( 'Call from JS', 'exit-notifier' ),
+			'description'			=> __( 'Call Exit Notifier directly from your JavaScript. Here is an example call:</p>' .
+				'<p><code>exit_notifier_js({
+					href: \'&ltdestinationURL&gt\', target: \'&lttarget&gt\'
+				})</code></p>' .
+				'<p>href is the destination URL<br>' .
+				'target should be \'_self\', \'_blank\', \'_top\', or \'_parent\' and will ' .
+				'override the default Exit Notifier setting on the Anchor (&lta&gt) Behavior page.</p>', 'exit-notifier' )
+		);
+		$settings['advanced'] = array(
+			'title'					=> __( 'Advanced', 'exit-notifier' ),
+			'description'			=> __( 'Advanced settings', 'exit-notifier' ),
+			'fields'				=> array(
+				array(
+					'id' 			=> 'remove_settings_on_uninstall',
+					'label'			=> __( 'Remove all settings?', 'exit-notifier' ),
+					'description'	=> __( 'With this box checked (the default) all Exit Notifier settings will be erased when the plugin is uninstalled. Uncheck to preserve settings.', 'exit-notifier' ),
+					'type'			=> 'checkbox',
+					'default'		=> 'on'
+				)
 			)
 		);
 
@@ -511,7 +736,7 @@ border: 3px solid #1e5799;
 		$html .= 'I welcome any suggestions for improvement of this plugin. Please feel free to contact me at <a href="mailto:wpplugins@cvstech.com">wpplugins@cvstech.com</a> with feature requests, bug reports, critiques, or anything else!';
 		$html .= '<p><em>Credit where credit is due:</em></p>';
 		$html .= 'I have made liberal use of the excellent Wordpress Plugin Template by Hugh Lashbrooke found at <a href="https://github.com/hlashbrooke/WordPress-Plugin-Template">https://github.com/hlashbrooke/WordPress-Plugin-Template</a>. Thanks, Hugh!';
-		$html .= '<br>Also, to <a href="http://flwebsites.biz/jAlert/">Versatility Werks</a>, the makers of jAlert. Great "werk", guys! Thanks!';
+		$html .= '<br>Also, to <a href="https://htmlguy.com">HTMLGuy</a>, the maker of <a href="https://htmlguyllc.github.io/jAlert/">jAlert</a>, a very versatile and simple alert component! Thanks!';
 
 
 		echo $html;
