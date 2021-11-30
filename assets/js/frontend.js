@@ -11,8 +11,8 @@ function exit_notifier_leave_now(event) {
 		urlsnippet = event.currentTarget.href.substr(0, 40) + "...";
 	}
 	//console.log("urlsnipppet: " + urlsnippet);
-	var finishedbody = ExitBoxSettings.body.replace('{target}',event.currentTarget.href);
-	var finishedtitle = ExitBoxSettings.title.replace('{target}',event.currentTarget.href);
+	var finishedbody = ExitBoxSettings.body.replace('{target}', event.currentTarget.href);
+	var finishedtitle = ExitBoxSettings.title.replace('{target}', event.currentTarget.href);
 	var finishedconfirmtext = ExitBoxSettings.GoButtonText;
 	if (ExitBoxSettings.Include_URL === 'on') {
 		finishedconfirmtext = ExitBoxSettings.GoButtonText + ' ' + urlsnippet;
@@ -20,28 +20,28 @@ function exit_notifier_leave_now(event) {
 	var finishedcanceltext = ExitBoxSettings.CancelButtonText;
 
 	if (jQuery(event.currentTarget).hasClass(ExitBoxSettings.alt_classname)) {
-		finishedbody = ExitBoxSettings.alt_body.replace('{target}',event.currentTarget.href);
-		finishedtitle = ExitBoxSettings.alt_title.replace('{target}',event.currentTarget.href);
+		finishedbody = ExitBoxSettings.alt_body.replace('{target}', event.currentTarget.href);
+		finishedtitle = ExitBoxSettings.alt_title.replace('{target}', event.currentTarget.href);
 		finishedconfirmtext = ExitBoxSettings.alt_GoButtonText;
 		finishedcanceltext = ExitBoxSettings.alt_CancelButtonText;
-			if (ExitBoxSettings.alt_Include_URL === 'on') {
-				finishedconfirmtext = ExitBoxSettings.alt_GoButtonText + ' ' + urlsnippet;
-			}
+		if (ExitBoxSettings.alt_Include_URL === 'on') {
+			finishedconfirmtext = ExitBoxSettings.alt_GoButtonText + ' ' + urlsnippet;
 		}
+	}
 	if (ExitBoxSettings.activate_custom_content === 'on') {
 		if (typeof jQuery(event.currentTarget).attr('exit-notifier-title') !== 'undefined') {
-			finishedtitle = jQuery(event.currentTarget).attr('exit-notifier-title').replace('{target}',event.currentTarget.href);
+			finishedtitle = jQuery(event.currentTarget).attr('exit-notifier-title').replace('{target}', event.currentTarget.href);
 		}
 		if (typeof jQuery(event.currentTarget).attr('exit-notifier-body') !== 'undefined') {
-			finishedbody = jQuery(event.currentTarget).attr('exit-notifier-body').replace('{target}',event.currentTarget.href);
+			finishedbody = jQuery(event.currentTarget).attr('exit-notifier-body').replace('{target}', event.currentTarget.href);
 		}
 	}
 	if (ExitBoxSettings.enable_timeout === 'on') {
 		if (ExitBoxSettings.enable_progressbar === 'on') {
-			finishedbody =  finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 100%"></progress>';
+			finishedbody = finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 100%"></progress>';
 		}
 		else {
-			finishedbody =  finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 0px;height: 0px;"></progress>';
+			finishedbody = finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 0px;height: 0px;"></progress>';
 		}
 		if (ExitBoxSettings.timeout_statement === 'on') {
 			var initialstatement = '';
@@ -51,10 +51,10 @@ function exit_notifier_leave_now(event) {
 			else {
 				initialstatement = ExitBoxSettings.timeout_text_cancel.replace('{seconds}', ExitBoxSettings.timeout_seconds);
 			}
-			finishedbody =  finishedbody + '<br><p style="text-align: center;" id="continueorcancelcountdown">' + initialstatement + '</p>';
+			finishedbody = finishedbody + '<br><p style="text-align: center;" id="continueorcancelcountdown">' + initialstatement + '</p>';
 		}
 		else {
-			finishedbody =  finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 0px;height: 0px;"></progress>';
+			finishedbody = finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 0px;height: 0px;"></progress>';
 		}
 	}
 	var countdownTimer = ''
@@ -70,20 +70,20 @@ function exit_notifier_leave_now(event) {
 			'cancelButtonText': finishedcanceltext,
 			'showCancelButton': true,
 			'width': "50%"
-		}).then(function(result) {
-		  if (result.value) {
-			  let clickTarget = '';
-			  if (typeof(thisevent.currentTarget != 'undefined') && thisevent.currentTarget.target === '_blank') {
-				  clickTarget = 'new';
-			  }
-			  if (ExitBoxSettings.new_window === 'on' || clickTarget === 'new') {
-				  window.open(thisevent.currentTarget.href, 'New Window');
-			  }
-			  else {
-				  location.href = thisevent.currentTarget.href;
-			  }
-		  }
-	  });
+		}).then(function (result) {
+			if (result.value) {
+				let clickTarget = '';
+				if (typeof (thisevent.currentTarget != 'undefined') && thisevent.currentTarget.target === '_blank') {
+					clickTarget = 'new';
+				}
+				if (ExitBoxSettings.new_window === 'on' || clickTarget === 'new') {
+					window.open(thisevent.currentTarget.href, 'New Window');
+				}
+				else {
+					location.href = thisevent.currentTarget.href;
+				}
+			}
+		});
 	} else {
 		jQuery.jAlert({
 			'type': 'confirm',
@@ -97,9 +97,9 @@ function exit_notifier_leave_now(event) {
 			'size': ExitBoxSettings.size,
 			'showAnimation': ExitBoxSettings.showAnimation,
 			'hideAnimation': ExitBoxSettings.hideAnimation,
-			'onConfirm': function() {
+			'onConfirm': function () {
 				let clickTarget = '';
-				if (typeof(event.currentTarget != 'undefined') && event.currentTarget.target === '_blank') {
+				if (typeof (event.currentTarget != 'undefined') && event.currentTarget.target === '_blank') {
 					clickTarget = 'new';
 				}
 				if (ExitBoxSettings.new_window === 'on' || clickTarget === 'new') {
@@ -109,10 +109,10 @@ function exit_notifier_leave_now(event) {
 					location.href = event.currentTarget.href;
 				}
 			},
-			'onDeny': function() {
+			'onDeny': function () {
 				jQuery(clickedObject).focus();
 			},
-			'onClose': function() {
+			'onClose': function () {
 				clearInterval(countdownTimer);
 			}
 		});
@@ -121,33 +121,33 @@ function exit_notifier_leave_now(event) {
 		var timeleft = ExitBoxSettings.timeout_seconds;
 		//console.log("Setting " + ExitBoxSettings.timeout_seconds + " seconds timeout on the " + ExitBoxSettings.continue_or_cancel + " button.");
 		if (ExitBoxSettings.continue_or_cancel === 'continue') {
-			countdownTimer = setInterval(function(){
+			countdownTimer = setInterval(function () {
 				document.getElementById("ExitNotifierProgressBar").value = ExitBoxSettings.timeout_seconds - --timeleft;
 				if (ExitBoxSettings.timeout_statement === 'on') {
-					jQuery("#continueorcancelcountdown").html(ExitBoxSettings.timeout_text_continue.replace('{seconds}',timeleft));
+					jQuery("#continueorcancelcountdown").html(ExitBoxSettings.timeout_text_continue.replace('{seconds}', timeleft));
 				}
 				//console.log(timeleft);
-				if(timeleft <= 0) {
+				if (timeleft <= 0) {
 					clearInterval(countdownTimer);
 					jQuery(".confirmBtn").click();
 				}
-			},1000);
+			}, 1000);
 		}
 		else if (ExitBoxSettings.continue_or_cancel === 'cancel') {
-			countdownTimer = setInterval(function(){
+			countdownTimer = setInterval(function () {
 				document.getElementById("ExitNotifierProgressBar").value = ExitBoxSettings.timeout_seconds - --timeleft;
 				if (ExitBoxSettings.timeout_statement === 'on') {
-					jQuery("#continueorcancelcountdown").html(ExitBoxSettings.timeout_text_cancel.replace('{seconds}',timeleft));
+					jQuery("#continueorcancelcountdown").html(ExitBoxSettings.timeout_text_cancel.replace('{seconds}', timeleft));
 				}
 				//console.log(timeleft);
-				if(timeleft <= 0) {
+				if (timeleft <= 0) {
 					clearInterval(countdownTimer);
 					jQuery(".denyBtn").click();
 				}
-			},1000);
+			}, 1000);
 		}
 	}
-    return false;
+	return false;
 };
 
 function exit_notifier_submit_now(event) {
@@ -162,33 +162,33 @@ function exit_notifier_submit_now(event) {
 		urlsnippet = event.srcElement.form.action.substr(0, 40) + "...";
 	}
 	//console.log("urlsnipppet: " + urlsnippet);
-	var finishedbody = ExitBoxSettings.body.replace('{target}',event.srcElement.form.action);
-	var finishedtitle = ExitBoxSettings.title.replace('{target}',event.srcElement.form.action);
+	var finishedbody = ExitBoxSettings.body.replace('{target}', event.srcElement.form.action);
+	var finishedtitle = ExitBoxSettings.title.replace('{target}', event.srcElement.form.action);
 	var finishedconfirmtext = ExitBoxSettings.GoButtonText;
 	if (ExitBoxSettings.Include_URL === 'on') {
 		finishedconfirmtext = ExitBoxSettings.GoButtonText + ' ' + urlsnippet;
 	}
 	var finishedcanceltext = ExitBoxSettings.CancelButtonText;
 	if (jQuery(event.currentTarget).hasClass(ExitBoxSettings.alt_classname)) {
-		finishedbody = ExitBoxSettings.alt_body.replace('{target}',event.srcElement.form.action);
-		finishedtitle = ExitBoxSettings.alt_title.replace('{target}',event.srcElement.form.action);
+		finishedbody = ExitBoxSettings.alt_body.replace('{target}', event.srcElement.form.action);
+		finishedtitle = ExitBoxSettings.alt_title.replace('{target}', event.srcElement.form.action);
 		finishedconfirmtext = ExitBoxSettings.alt_GoButtonText;
 		finishedcanceltext = ExitBoxSettings.alt_CancelButtonText;
 	}
 	if (ExitBoxSettings.activate_custom_content === 'on') {
 		if (typeof jQuery(event.currentTarget).attr('exit-notifier-title') !== 'undefined') {
-			finishedtitle = jQuery(event.currentTarget).attr('exit-notifier-title').replace('{target}',event.srcElement.form.action);
+			finishedtitle = jQuery(event.currentTarget).attr('exit-notifier-title').replace('{target}', event.srcElement.form.action);
 		}
 		if (typeof jQuery(event.currentTarget).attr('exit-notifier-body') !== 'undefined') {
-			finishedbody = jQuery(event.currentTarget).attr('exit-notifier-body').replace('{target}',event.srcElement.form.action);
+			finishedbody = jQuery(event.currentTarget).attr('exit-notifier-body').replace('{target}', event.srcElement.form.action);
 		}
 	}
 	if (ExitBoxSettings.enable_timeout === 'on') {
 		if (ExitBoxSettings.enable_progressbar === 'on') {
-			finishedbody =  finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 100%"></progress>';
+			finishedbody = finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 100%"></progress>';
 		}
 		else {
-			finishedbody =  finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 0px;height: 0px;"></progress>';
+			finishedbody = finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 0px;height: 0px;"></progress>';
 		}
 		if (ExitBoxSettings.timeout_statement === 'on') {
 			var initialstatement = '';
@@ -198,10 +198,10 @@ function exit_notifier_submit_now(event) {
 			else {
 				initialstatement = ExitBoxSettings.timeout_text_cancel.replace('{seconds}', ExitBoxSettings.timeout_seconds);
 			}
-			finishedbody =  finishedbody + '<br><p style="text-align: center;" id="continueorcancelcountdown">' + initialstatement + '</p>';
+			finishedbody = finishedbody + '<br><p style="text-align: center;" id="continueorcancelcountdown">' + initialstatement + '</p>';
 		}
 		else {
-			finishedbody =  finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 0px;height: 0px;"></progress>';
+			finishedbody = finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 0px;height: 0px;"></progress>';
 		}
 	}
 	// console.log(finishedbody);
@@ -226,45 +226,45 @@ function exit_notifier_submit_now(event) {
 		'size': ExitBoxSettings.size,
 		'showAnimation': ExitBoxSettings.showAnimation,
 		'hideAnimation': ExitBoxSettings.hideAnimation,
-		'onConfirm': function() {
+		'onConfirm': function () {
 			jQuery(event.srcElement.form).submit();
 		},
-		'onDeny': function(){
+		'onDeny': function () {
 			event.preventDefault();
 		},
-		'onClose': function(){
+		'onClose': function () {
 			clearInterval(countdownTimer);
 		}
 	});
 	if (ExitBoxSettings.enable_timeout === 'on') {
 		var timeleft = ExitBoxSettings.timeout_seconds;
 		if (ExitBoxSettings.continue_or_cancel === 'continue') {
-			countdownTimer = setInterval(function(){
+			countdownTimer = setInterval(function () {
 				document.getElementById("ExitNotifierProgressBar").value = ExitBoxSettings.timeout_seconds - --timeleft;
 				if (ExitBoxSettings.timeout_statement === 'on') {
-					jQuery("#continueorcancelcountdown").html(ExitBoxSettings.timeout_text_continue.replace('{seconds}',timeleft));
+					jQuery("#continueorcancelcountdown").html(ExitBoxSettings.timeout_text_continue.replace('{seconds}', timeleft));
 				}
-				if(timeleft <= 0) {
+				if (timeleft <= 0) {
 					clearInterval(countdownTimer);
 					jQuery(".confirmBtn").click();
 				}
-			},1000);
+			}, 1000);
 		}
 		else if (ExitBoxSettings.continue_or_cancel === 'cancel') {
-			countdownTimer = setInterval(function(){
+			countdownTimer = setInterval(function () {
 				document.getElementById("ExitNotifierProgressBar").value = ExitBoxSettings.timeout_seconds - --timeleft;
 				if (ExitBoxSettings.timeout_statement === 'on') {
-					jQuery("#continueorcancelcountdown").html(ExitBoxSettings.timeout_text_cancel.replace('{seconds}',timeleft));
+					jQuery("#continueorcancelcountdown").html(ExitBoxSettings.timeout_text_cancel.replace('{seconds}', timeleft));
 				}
-				if(timeleft <= 0) {
+				if (timeleft <= 0) {
 					clearInterval(countdownTimer);
 					jQuery(".denyBtn").click();
 				}
-			},1000);
+			}, 1000);
 		}
 	}
 	//jQuery.data('dev.ja_body',exitNotifierTimer,countdownTimer);
-  return false;
+	return false;
 };
 
 function exit_notifier_js(parameters) {
@@ -278,8 +278,8 @@ function exit_notifier_js(parameters) {
 		urlsnippet = parameters.href.substr(0, 40) + "...";
 	}
 	//console.log("urlsnipppet: " + urlsnippet);
-	var finishedbody = ExitBoxSettings.body.replace('{target}',parameters.href);
-	var finishedtitle = ExitBoxSettings.title.replace('{target}',parameters.href);
+	var finishedbody = ExitBoxSettings.body.replace('{target}', parameters.href);
+	var finishedtitle = ExitBoxSettings.title.replace('{target}', parameters.href);
 	var finishedconfirmtext = ExitBoxSettings.GoButtonText;
 	if (ExitBoxSettings.Include_URL === 'on') {
 		finishedconfirmtext = ExitBoxSettings.GoButtonText + ' ' + urlsnippet;
@@ -287,28 +287,28 @@ function exit_notifier_js(parameters) {
 	var finishedcanceltext = ExitBoxSettings.CancelButtonText;
 
 	if (jQuery(parameters).hasClass(ExitBoxSettings.alt_classname)) {
-		finishedbody = ExitBoxSettings.alt_body.replace('{target}',parameters.href);
-		finishedtitle = ExitBoxSettings.alt_title.replace('{target}',parameters.href);
+		finishedbody = ExitBoxSettings.alt_body.replace('{target}', parameters.href);
+		finishedtitle = ExitBoxSettings.alt_title.replace('{target}', parameters.href);
 		finishedconfirmtext = ExitBoxSettings.alt_GoButtonText;
 		finishedcanceltext = ExitBoxSettings.alt_CancelButtonText;
-			if (ExitBoxSettings.alt_Include_URL === 'on') {
-				finishedconfirmtext = ExitBoxSettings.alt_GoButtonText + ' ' + urlsnippet;
-			}
+		if (ExitBoxSettings.alt_Include_URL === 'on') {
+			finishedconfirmtext = ExitBoxSettings.alt_GoButtonText + ' ' + urlsnippet;
 		}
+	}
 	if (ExitBoxSettings.activate_custom_content === 'on') {
 		if (typeof jQuery(parameters).attr('exit-notifier-title') !== 'undefined') {
-			finishedtitle = jQuery(parameters).attr('exit-notifier-title').replace('{target}',parameters.href);
+			finishedtitle = jQuery(parameters).attr('exit-notifier-title').replace('{target}', parameters.href);
 		}
 		if (typeof jQuery(parameters).attr('exit-notifier-body') !== 'undefined') {
-			finishedbody = jQuery(parameters).attr('exit-notifier-body').replace('{target}',parameters.href);
+			finishedbody = jQuery(parameters).attr('exit-notifier-body').replace('{target}', parameters.href);
 		}
 	}
 	if (ExitBoxSettings.enable_timeout === 'on') {
 		if (ExitBoxSettings.enable_progressbar === 'on') {
-			finishedbody =  finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 100%"></progress>';
+			finishedbody = finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 100%"></progress>';
 		}
 		else {
-			finishedbody =  finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 0px;height: 0px;"></progress>';
+			finishedbody = finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 0px;height: 0px;"></progress>';
 		}
 		if (ExitBoxSettings.timeout_statement === 'on') {
 			var initialstatement = '';
@@ -318,10 +318,10 @@ function exit_notifier_js(parameters) {
 			else {
 				initialstatement = ExitBoxSettings.timeout_text_cancel.replace('{seconds}', ExitBoxSettings.timeout_seconds);
 			}
-			finishedbody =  finishedbody + '<br><p style="text-align: center;" id="continueorcancelcountdown">' + initialstatement + '</p>';
+			finishedbody = finishedbody + '<br><p style="text-align: center;" id="continueorcancelcountdown">' + initialstatement + '</p>';
 		}
 		else {
-			finishedbody =  finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 0px;height: 0px;"></progress>';
+			finishedbody = finishedbody + '<progress value="0" max="' + ExitBoxSettings.timeout_seconds + '" id="ExitNotifierProgressBar" style="width: 0px;height: 0px;"></progress>';
 		}
 	}
 	var countdownTimer = ''
@@ -356,7 +356,7 @@ function exit_notifier_js(parameters) {
 						'Turn off this alert by turning off the debug option in Exit Notifier settings.')
 				}
 				window.open(parameters.href, linktarget);
-		  	}
+			}
 		});
 	} else {
 		jQuery.jAlert({
@@ -371,18 +371,18 @@ function exit_notifier_js(parameters) {
 			'size': ExitBoxSettings.size,
 			'showAnimation': ExitBoxSettings.showAnimation,
 			'hideAnimation': ExitBoxSettings.hideAnimation,
-			'onConfirm': function() {
+			'onConfirm': function () {
 				// console.log('jA clicked! ', parameters)
 				let linktarget = '_blank';
 				if (parameters.target !== undefined) {
-				  linktarget = parameters.target;
+					linktarget = parameters.target;
 				} else {
-				  if (ExitBoxSettings.new_window === 'on') {
-					  linktarget = '_blank';
-				  }
-				  else {
-					  linktarget = '_self';
-				  }
+					if (ExitBoxSettings.new_window === 'on') {
+						linktarget = '_blank';
+					}
+					else {
+						linktarget = '_self';
+					}
 				}
 				if (ExitBoxSettings.debugtoconsole) {
 					console.log('linktarget: ', linktarget)
@@ -391,10 +391,10 @@ function exit_notifier_js(parameters) {
 				}
 				window.open(parameters.href, linktarget);
 			},
-			'onDeny': function() {
+			'onDeny': function () {
 				// jQuery(clickedObject).focus();
 			},
-			'onClose': function() {
+			'onClose': function () {
 				clearInterval(countdownTimer);
 			}
 		});
@@ -403,45 +403,45 @@ function exit_notifier_js(parameters) {
 		var timeleft = ExitBoxSettings.timeout_seconds;
 		//console.log("Setting " + ExitBoxSettings.timeout_seconds + " seconds timeout on the " + ExitBoxSettings.continue_or_cancel + " button.");
 		if (ExitBoxSettings.continue_or_cancel === 'continue') {
-			countdownTimer = setInterval(function(){
+			countdownTimer = setInterval(function () {
 				document.getElementById("ExitNotifierProgressBar").value = ExitBoxSettings.timeout_seconds - --timeleft;
 				if (ExitBoxSettings.timeout_statement === 'on') {
-					jQuery("#continueorcancelcountdown").html(ExitBoxSettings.timeout_text_continue.replace('{seconds}',timeleft));
+					jQuery("#continueorcancelcountdown").html(ExitBoxSettings.timeout_text_continue.replace('{seconds}', timeleft));
 				}
 				//console.log(timeleft);
-				if(timeleft <= 0) {
+				if (timeleft <= 0) {
 					clearInterval(countdownTimer);
 					jQuery(".confirmBtn").click();
 				}
-			},1000);
+			}, 1000);
 		}
 		else if (ExitBoxSettings.continue_or_cancel === 'cancel') {
-			countdownTimer = setInterval(function(){
+			countdownTimer = setInterval(function () {
 				document.getElementById("ExitNotifierProgressBar").value = ExitBoxSettings.timeout_seconds - --timeleft;
 				if (ExitBoxSettings.timeout_statement === 'on') {
-					jQuery("#continueorcancelcountdown").html(ExitBoxSettings.timeout_text_cancel.replace('{seconds}',timeleft));
+					jQuery("#continueorcancelcountdown").html(ExitBoxSettings.timeout_text_cancel.replace('{seconds}', timeleft));
 				}
 				//console.log(timeleft);
-				if(timeleft <= 0) {
+				if (timeleft <= 0) {
 					clearInterval(countdownTimer);
 					jQuery(".denyBtn").click();
 				}
-			},1000);
+			}, 1000);
 		}
 	}
-    return false;
+	return false;
 };
 
 function stopcountdown() {
-	clearInterval(jQuery.data('dev.ja_body',exitNotifierTimer));
-	jQuery('#continueorcancelcountdown').toggle( "slow" );
+	clearInterval(jQuery.data('dev.ja_body', exitNotifierTimer));
+	jQuery('#continueorcancelcountdown').toggle("slow");
 }
 
-jQuery(document).ready(function(){
+jQuery(document).ready(function () {
 	jQuery.noConflict();
 	jQuery('head').append('<style>.ja_custom {' + ExitBoxSettings.custom_css + '}</style>');
 	jQuery('head').append('<style>' + ExitBoxSettings.advanced_custom_css + '</style>');
-	jQuery(function($) {
+	jQuery(function ($) {
 		// a href
 		var select_external = 'a[href*="//"]:not([href*="' + ExitBoxSettings.siteroot + '"])';
 		if (ExitBoxSettings.apply_to_all_offsite_links !== 'on') {
@@ -456,16 +456,26 @@ jQuery(document).ready(function(){
 			console.log('Exit Notifier alert utility: ', ExitBoxSettings.sa2_or_jAlert);
 		}
 
+		// Added by Mike Reall
+		jQuery('a').each(function () {
+			const url = $(this).attr('href');
+			try {
+				const { hostname } = new URL(url);
+				$(this).attr('exitnotifierdomain', hostname);
+			} catch (err) { /* Do nothing */ }
+		});
+		// End: Added by Mike Reall
+
 		jQuery(select_external).addClass('exitNotifierLink');
 		if (ExitBoxSettings.addclasses === 'on') {
 			jQuery(select_external).addClass(ExitBoxSettings.classestoadd);
 		}
-		jQuery(document).on( 'click', select_external, exit_notifier_leave_now );
+		jQuery(document).on('click', select_external, exit_notifier_leave_now);
 		if (ExitBoxSettings.visual === 'on') {
 			jQuery(select_external).append('&nbsp;<img class="flat" src="' + ExitBoxSettings.siteurl + '/wp-content/plugins/exit-notifier/external-link.png" border=0>');
 		}
 		if (ExitBoxSettings.relnofollow === 'on') {
-			jQuery(select_external).attr("rel",function() {
+			jQuery(select_external).attr("rel", function () {
 				return "nofollow " + jQuery(this).attr("rel");
 			});
 		}
@@ -478,7 +488,7 @@ jQuery(document).ready(function(){
 			jQuery(submit_external).addClass('exitNotifierForm');
 			//console.log(submit_external)
 			var formsubmitbutton = jQuery(submit_external).find(':submit');
-			jQuery(document).on( 'click', formsubmitbutton, exit_notifier_submit_now );
+			jQuery(document).on('click', formsubmitbutton, exit_notifier_submit_now);
 			if (ExitBoxSettings.visual === 'on') {
 				jQuery(submit_external).append('&nbsp;<img class="flat" src="' + ExitBoxSettings.siteurl + '/wp-content/plugins/exit-notifier/external-link.png" border=0>');
 			}
