@@ -77,7 +77,8 @@ function exit_notifier_leave_now(event) {
 					clickTarget = 'new';
 				}
 				if (ExitBoxSettings.new_window === 'on' || clickTarget === 'new') {
-					window.open(thisevent.currentTarget.href, 'New Window');
+					//window.open(thisevent.currentTarget.href, 'New Window');
+					window.exit_notifier_open(thisevent.currentTarget.href, 'New Window');
 				}
 				else {
 					location.href = thisevent.currentTarget.href;
@@ -103,7 +104,8 @@ function exit_notifier_leave_now(event) {
 					clickTarget = 'new';
 				}
 				if (ExitBoxSettings.new_window === 'on' || clickTarget === 'new') {
-					window.open(event.currentTarget.href, 'New Window');
+					//window.open(event.currentTarget.href, 'New Window');
+					window.exit_notifier_open(event.currentTarget.href, 'New Window');
 				}
 				else {
 					location.href = event.currentTarget.href;
@@ -355,7 +357,8 @@ function exit_notifier_js(parameters) {
 					alert('Debug delay so you can check the developer\'s console. Once you dismiss this dialog, the new link will load. ' +
 						'Turn off this alert by turning off the debug option in Exit Notifier settings.')
 				}
-				window.open(parameters.href, linktarget);
+				//window.open(parameters.href, linktarget);
+				window.exit_notifier_open(parameters.href, linktarget);
 			}
 		});
 	} else {
@@ -389,7 +392,8 @@ function exit_notifier_js(parameters) {
 					alert('Debug delay so you can check the developer\'s console. Once you dismiss this dialog, the new link will load. ' +
 						'Turn off this alert by turning off the debug option in Exit Notifier settings.')
 				}
-				window.open(parameters.href, linktarget);
+				//window.open(parameters.href, linktarget);
+				window.exit_notifier_open(parameters.href, linktarget);
 			},
 			'onDeny': function () {
 				// jQuery(clickedObject).focus();
@@ -457,6 +461,7 @@ jQuery(document).ready(function () {
 		}
 
 		// Added by Mike Reall
+		// Store the domain of the link so it can be referenced from the css selector.
 		jQuery('a').each(function () {
 			const url = $(this).attr('href');
 			try {
@@ -464,6 +469,24 @@ jQuery(document).ready(function () {
 				$(this).attr('exitnotifierdomain', hostname);
 			} catch (err) { /* Do nothing */ }
 		});
+
+		// Catch any window.open attempts.
+		window.exit_notifier_open = window.open;
+		window.open = function (url, name, features) {
+			// Extract any domains excluded in the settings.
+			const matches = [...select_external.toLowerCase().matchAll(/\:.*?\*\=\"(.+?)\"/g)];
+			const excludeDomains = matches.map(list => list[1]);
+			if (excludeDomains.length) {
+				try {
+					const { hostname } = new URL(url);
+					if (excludeDomains.some(domain => hostname.indexOf(domain) >= 0)) {
+						window.exit_notifier_open(url, name, features);
+					} else {
+						exit_notifier_js({ href: url, target: '_blank' });
+					}
+				} catch (err) { /* Do nothing */ }
+			}
+		}
 		// End: Added by Mike Reall
 
 		jQuery(select_external).addClass('exitNotifierLink');

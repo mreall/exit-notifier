@@ -1,12 +1,12 @@
 <?php
 /*
  * Plugin Name: Exit Notifier Plus
- * Version: 1.9.2
+ * Version: 1.9.4
  * Description: Pops up a notice when someone clicks a link that takes them away from your site.
  * Author: Anala
  * Author URI: http://www.anala.com/
  * Requires at least: 4.0
- * Tested up to: 5.7
+ * Tested up to: 5.8
  *
  * @package WordPress
  * @author Anala

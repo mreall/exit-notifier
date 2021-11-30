@@ -1,4 +1,10 @@
 *** Exit Notifier Plus Changelog ***
 
-2021.11.19 - version 0.1
+2021.11.30 - version 1.9.4
+* Extract exclude domains from css selectors provided in settings.
+
+2021.11.30 - version 1.9.3
+* Added support for window.open calls.
+
+2021.11.19 - version 1.9.2
 * Forked Exit Notifier version 1.9.1

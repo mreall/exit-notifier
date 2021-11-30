@@ -10,6 +10,9 @@ const revall = require('gulp-rev-all');
  */
 const zipFiles = () =>
    gulp.src([
+      '*assets/**/*',
+      '*includes/**/*',
+      '*lang/**/*',
       '*.php',
       '*.png',
       'LICENSE',
