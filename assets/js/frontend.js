@@ -460,15 +460,11 @@ jQuery(document).ready(function () {
 			console.log('Exit Notifier alert utility: ', ExitBoxSettings.sa2_or_jAlert);
 		}
 
-		// Added by Mike Reall
-		// Store the domain of the link so it can be referenced from the css selector.
-		jQuery('a').each(function () {
-			const url = $(this).attr('href');
-			try {
-				const { hostname } = new URL(url);
-				$(this).attr('exitnotifierdomain', hostname);
-			} catch (err) { /* Do nothing */ }
-		});
+
+		// Add additional data to each external link.
+		exit_notifier_manage_links(select_external);
+
+		jQuery(document).on('click', select_external, exit_notifier_leave_now);
 
 		// Catch any window.open attempts.
 		window.exit_notifier_open = window.open;
@@ -487,21 +483,7 @@ jQuery(document).ready(function () {
 				} catch (err) { /* Do nothing */ }
 			}
 		}
-		// End: Added by Mike Reall
 
-		jQuery(select_external).addClass('exitNotifierLink');
-		if (ExitBoxSettings.addclasses === 'on') {
-			jQuery(select_external).addClass(ExitBoxSettings.classestoadd);
-		}
-		jQuery(document).on('click', select_external, exit_notifier_leave_now);
-		if (ExitBoxSettings.visual === 'on') {
-			jQuery(select_external).append('&nbsp;<img class="flat" src="' + ExitBoxSettings.siteurl + '/wp-content/plugins/exit-notifier/external-link.png" border=0>');
-		}
-		if (ExitBoxSettings.relnofollow === 'on') {
-			jQuery(select_external).attr("rel", function () {
-				return "nofollow " + jQuery(this).attr("rel");
-			});
-		}
 		// Forms
 		if (ExitBoxSettings.enable_notifier_for_forms === 'on') {
 			var submit_external = 'form[action*="//"]:not([action*="' + ExitBoxSettings.siteroot + '"])';
@@ -520,3 +502,34 @@ jQuery(document).ready(function () {
 		//jQuery("div.ja_body").on('click',stopcountdown);
 	});
 });
+
+jQuery(document).ajaxComplete(function () {
+	exit_notifier_manage_links();
+});
+
+function exit_notifier_manage_links(select_external) {
+	// Store the domain of the link so it can be referenced from the css selector.
+	jQuery('a').each(function () {
+		const url = jQuery(this).attr('href');
+		try {
+			const { hostname } = new URL(url);
+			jQuery(this).attr('exitnotifierdomain', hostname);
+		} catch (err) { /* Do nothing */ }
+	});
+
+	// Exclude anything that has already been updated.
+	const select_external_new = select_external + ":not(.exitNotifierLink)";
+
+	jQuery(select_external_new).addClass('exitNotifierLink');
+	if (ExitBoxSettings.addclasses === 'on') {
+		jQuery(select_external_new).addClass(ExitBoxSettings.classestoadd);
+	}
+	if (ExitBoxSettings.visual === 'on') {
+		jQuery(select_external_new).append('&nbsp;<img class="flat" src="' + ExitBoxSettings.siteurl + '/wp-content/plugins/exit-notifier/external-link.png" border=0>');
+	}
+	if (ExitBoxSettings.relnofollow === 'on') {
+		jQuery(select_external_new).attr("rel", function () {
+			return "nofollow " + jQuery(this).attr("rel");
+		});
+	}
+}

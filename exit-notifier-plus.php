@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Exit Notifier Plus
- * Version: 1.9.4
+ * Version: 1.9.5
  * Description: Pops up a notice when someone clicks a link that takes them away from your site.
  * Author: Anala
  * Author URI: http://www.anala.com/

@@ -1,5 +1,8 @@
 *** Exit Notifier Plus Changelog ***
 
+2021.12.01 - version 1.9.5
+* Update links loaded via ajax.
+
 2021.11.30 - version 1.9.4
 * Extract exclude domains from css selectors provided in settings.
 
