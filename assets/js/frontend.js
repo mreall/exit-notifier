@@ -78,11 +78,15 @@ function exit_notifier_leave_now(event) {
 				}
 				if (ExitBoxSettings.new_window === 'on' || clickTarget === 'new') {
 					//window.open(thisevent.currentTarget.href, 'New Window');
+					exit_notifier_ga_track_link(thisevent.currentTarget.href, true);
 					window.exit_notifier_open(thisevent.currentTarget.href, 'New Window');
 				}
 				else {
+					exit_notifier_ga_track_link(thisevent.currentTarget.href, true);
 					location.href = thisevent.currentTarget.href;
 				}
+			} else {
+				exit_notifier_ga_track_link(thisevent.currentTarget.href, false);
 			}
 		});
 	} else {
@@ -105,13 +109,16 @@ function exit_notifier_leave_now(event) {
 				}
 				if (ExitBoxSettings.new_window === 'on' || clickTarget === 'new') {
 					//window.open(event.currentTarget.href, 'New Window');
+					exit_notifier_ga_track_link(event.currentTarget.href, true);
 					window.exit_notifier_open(event.currentTarget.href, 'New Window');
 				}
 				else {
+					exit_notifier_ga_track_link(event.currentTarget.href, true);
 					location.href = event.currentTarget.href;
 				}
 			},
 			'onDeny': function () {
+				exit_notifier_ga_track_link(event.currentTarget.href, false);
 				jQuery(clickedObject).focus();
 			},
 			'onClose': function () {
@@ -358,7 +365,10 @@ function exit_notifier_js(parameters) {
 						'Turn off this alert by turning off the debug option in Exit Notifier settings.')
 				}
 				//window.open(parameters.href, linktarget);
+				exit_notifier_ga_track_link(parameters.href, true);
 				window.exit_notifier_open(parameters.href, linktarget);
+			} else {
+				exit_notifier_ga_track_link(parameters.href, false);
 			}
 		});
 	} else {
@@ -393,10 +403,12 @@ function exit_notifier_js(parameters) {
 						'Turn off this alert by turning off the debug option in Exit Notifier settings.')
 				}
 				//window.open(parameters.href, linktarget);
+				exit_notifier_ga_track_link(parameters.href, true);
 				window.exit_notifier_open(parameters.href, linktarget);
 			},
 			'onDeny': function () {
 				// jQuery(clickedObject).focus();
+				exit_notifier_ga_track_link(parameters.href, false);
 			},
 			'onClose': function () {
 				clearInterval(countdownTimer);
@@ -532,4 +544,33 @@ function exit_notifier_manage_links(select_external) {
 			return "nofollow " + jQuery(this).attr("rel");
 		});
 	}
+}
+
+function exit_notifier_ga_track_link(url, leave) {
+	// Google Analytics Universal Analytics is not installed.
+	if (!ga) {
+		if (ExitBoxSettings.debugtoconsole) {
+			console.log(`Google Analytics is not available on this site.`);
+		}
+		return;
+	}
+
+	// Google Analytics tracking is not enabled.
+	if (!ExitBoxSettings.analytics || !ExitBoxSettings.analytics.enabled) {
+		if (ExitBoxSettings.debugtoconsole) {
+			console.log(`exit_notifier_ga_track_link, Google Analytics is not enabled.`);
+		}
+		return;
+	}
+
+	const category = ExitBoxSettings.analytics.event.category;
+	const action = leave ?
+		ExitBoxSettings.analytics.event.action_leave :
+		ExitBoxSettings.analytics.event.action_stay;
+
+	if (ExitBoxSettings.debugtoconsole) {
+		console.log(`exit_notifier_ga_track_link, tracking category(${category}), action(${action}), label(${url}).`);
+	}
+
+	ga('send', 'event', category, action, url, { 'transport': 'beacon' });
 }

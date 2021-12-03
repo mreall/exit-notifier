@@ -1,5 +1,8 @@
 *** Exit Notifier Plus Changelog ***
 
+2021.12.03 - version 1.9.6
+* Add outbound link tracking to Google Analytics via events.
+
 2021.12.01 - version 1.9.5
 * Update links loaded via ajax.
 
