@@ -32,7 +32,7 @@ require_once('includes/lib/class-exit-notifier-taxonomy.php');
  */
 function Exit_Notifier_Plus()
 {
-	$instance = Exit_Notifier_Plus::instance(__FILE__, '1.9.2');
+	$instance = Exit_Notifier_Plus::instance(__FILE__, '1.9.5');
 
 	if (is_null($instance->settings)) {
 		$instance->settings = Exit_Notifier_Settings::instance($instance);
