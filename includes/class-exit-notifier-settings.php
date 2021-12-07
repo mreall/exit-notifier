@@ -639,7 +639,7 @@ border: 3px solid #1e5799;
 				array(
 					'id' 			=> 'google_analytics_property_id',
 					'label'			=> __('Property ID', 'exit-notifier'),
-					'description'	=> __('<br>Enter the property ID (UA-#########-# or G-XXXXXXXXXX)', 'exit-notifier'),
+					'description'	=> __('<br>Enter the property ID (UA-#########-#)', 'exit-notifier'),
 					'type'			=> 'text',
 					'default'		=> 'UA-'
 				),
