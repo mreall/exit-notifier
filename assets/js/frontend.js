@@ -563,6 +563,26 @@ function exit_notifier_ga_track_link(url, leave) {
 		return;
 	}
 
+	// Google Tag Manager tracking is not enabled.
+	if (ExitBoxSettings.gtm && ExitBoxSettings.gtm.enabled && dataLayer) {
+		const gtmAction = leave ?
+			ExitBoxSettings.gtm.event.action_leave :
+			ExitBoxSettings.gtm.event.action_stay;
+		const urlObj = new URL(url);
+		dataLayer.push({
+			'event': ExitBoxSettings.gtm.event.name,
+			'siteExit': {
+				'action': gtmAction,
+				'hostname': urlObj.hostname,
+				'url': url
+			}
+		});
+	} else {
+		if (ExitBoxSettings.debugtoconsole) {
+			console.log(`exit_notifier_ga_track_link, Google Tag Manager is not enabled.`);
+		}
+	}
+
 	const category = ExitBoxSettings.analytics.event.category;
 	const action = leave ?
 		ExitBoxSettings.analytics.event.action_leave :

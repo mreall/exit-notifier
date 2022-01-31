@@ -86,4 +86,14 @@ jQuery(document).ready(function ($) {
   jQuery('#google_analytics_event_action_leave').prop('disabled', !jQuery('#google_analytics_enabled').prop('checked'));
   jQuery('#google_analytics_event_action_stay').prop('disabled', !jQuery('#google_analytics_enabled').prop('checked'));
 
+  // Google Tag Manager
+  jQuery('#gtm_enabled').click(function () {
+    jQuery('#gtm_event_name').prop('disabled', !jQuery('#gtm_enabled').prop('checked'));
+    jQuery('#gtm_event_action_leave').prop('disabled', !jQuery('#gtm_enabled').prop('checked'));
+    jQuery('#gtm_event_action_stay').prop('disabled', !jQuery('#gtm_enabled').prop('checked'));
+  });
+  jQuery('#gtm_property_id').prop('disabled', !jQuery('#gtm_enabled').prop('checked'));
+  jQuery('#gtm_event_name').prop('disabled', !jQuery('#gtm_enabled').prop('checked'));
+  jQuery('#gtm_event_action_leave').prop('disabled', !jQuery('#gtm_enabled').prop('checked'));
+  jQuery('#gtm_event_action_stay').prop('disabled', !jQuery('#gtm_enabled').prop('checked'));
 });

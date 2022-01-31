@@ -667,6 +667,41 @@ border: 3px solid #1e5799;
 			)
 		);
 
+		$settings['gtm'] = array(
+			'title'					=> __('Google Tag Manager', 'exit-notifier'),
+			'description'			=> __('Track outbound link clicks in Google Tag Manager.', 'exit-notifier'),
+			'fields'				=> array(
+				array(
+					'id' 			=> 'gtm_enabled',
+					'label'			=> __('Enable event tracking?', 'exit-notifier'),
+					'description'	=> __('With this box checked all outbound link clicks will trigger an event in Google Tag Manager', 'exit-notifier'),
+					'type'			=> 'checkbox',
+					'default'		=> 'off'
+				),
+				array(
+					'id' 			=> 'gtm_event_name',
+					'label'			=> __('Event Name', 'exit-notifier'),
+					'description'	=> __('<br>The event name as it will appear in Tag Manager', 'exit-notifier'),
+					'type'			=> 'text',
+					'default'		=> 'outbound-link'
+				),
+				array(
+					'id' 			=> 'gtm_event_action_leave',
+					'label'			=> __('Leave Action', 'exit-notifier'),
+					'description'	=> __('<br>The action recorded when the user leaves the site to the outbound link', 'exit-notifier'),
+					'type'			=> 'text',
+					'default'		=> 'leave'
+				),
+				array(
+					'id' 			=> 'gtm_event_action_stay',
+					'label'			=> __('Stay Action', 'exit-notifier'),
+					'description'	=> __('<br>The action recorded when the user stays on the site after clicking an outbound link', 'exit-notifier'),
+					'type'			=> 'text',
+					'default'		=> 'stay'
+				)
+			)
+		);
+
 		$settings = apply_filters($this->parent->_token . '_settings_fields', $settings);
 
 		return $settings;

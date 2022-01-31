@@ -273,6 +273,15 @@ border: 3px solid #1e5799;
 					'action_leave' => get_option('exitbox_google_analytics_event_action_leave', ''),
 					'action_stay' => get_option('exitbox_google_analytics_event_action_stay', '')
 				)
+			),
+			// Google Tag Manager
+			'gtm' => array(
+				'enabled' => get_option('exitbox_gtm_enabled', '') == 'on',
+				'event' => array(
+					'name' => get_option('exitbox_gtm_event_name', ''),
+					'action_leave' => get_option('exitbox_gtm_event_action_leave', ''),
+					'action_stay' => get_option('exitbox_gtm_event_action_stay', '')
+				)
 			)
 		);
 		wp_localize_script($this->_token . '-frontend', "ExitBoxSettings", $exitboxsettings);
