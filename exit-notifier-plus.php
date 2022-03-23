@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Exit Notifier Plus
- * Version: 1.9.10
+ * Version: 1.9.11
  * Description: Pops up a notice when someone clicks a link that takes them away from your site.
  * Author: Anala
  * Author URI: http://www.anala.com/
@@ -32,7 +32,7 @@ require_once('includes/lib/class-exit-notifier-taxonomy.php');
  */
 function Exit_Notifier_Plus()
 {
-	$instance = Exit_Notifier_Plus::instance(__FILE__, '1.9.10');
+	$instance = Exit_Notifier_Plus::instance(__FILE__, '1.9.11');
 
 	if (is_null($instance->settings)) {
 		$instance->settings = Exit_Notifier_Settings::instance($instance);

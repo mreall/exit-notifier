@@ -548,19 +548,27 @@ function exit_notifier_manage_links(select_external) {
 
 function exit_notifier_ga_track_link(url, leave) {
 	// Google Analytics Universal Analytics is not installed.
-	if (!ga) {
+	if (ga) {
+		// Google Analytics tracking is not enabled.
+		if (ExitBoxSettings.analytics && ExitBoxSettings.analytics.enabled) {
+			const category = ExitBoxSettings.analytics.event.category;
+			const action = leave ?
+				ExitBoxSettings.analytics.event.action_leave :
+				ExitBoxSettings.analytics.event.action_stay;
+			ga('send', 'event', category, action, url, { 'transport': 'beacon' });
+
+			if (ExitBoxSettings.debugtoconsole) {
+				console.log(`exit_notifier_ga_track_link, [analytics] tracking category(${category}), action(${action}), label(${url}).`);
+			}
+		} else {
+			if (ExitBoxSettings.debugtoconsole) {
+				console.log(`exit_notifier_ga_track_link, Google Analytics is not enabled.`);
+			}
+		}
+	} else {
 		if (ExitBoxSettings.debugtoconsole) {
 			console.log(`Google Analytics is not available on this site.`);
 		}
-		return;
-	}
-
-	// Google Analytics tracking is not enabled.
-	if (!ExitBoxSettings.analytics || !ExitBoxSettings.analytics.enabled) {
-		if (ExitBoxSettings.debugtoconsole) {
-			console.log(`exit_notifier_ga_track_link, Google Analytics is not enabled.`);
-		}
-		return;
 	}
 
 	// Google Tag Manager tracking is not enabled.
@@ -577,20 +585,13 @@ function exit_notifier_ga_track_link(url, leave) {
 				'url': url
 			}
 		});
+
+		if (ExitBoxSettings.debugtoconsole) {
+			console.log(`exit_notifier_ga_track_link, [gtm] tracking action(${gtmAction}), label(${url}).`);
+		}
 	} else {
 		if (ExitBoxSettings.debugtoconsole) {
 			console.log(`exit_notifier_ga_track_link, Google Tag Manager is not enabled.`);
 		}
 	}
-
-	const category = ExitBoxSettings.analytics.event.category;
-	const action = leave ?
-		ExitBoxSettings.analytics.event.action_leave :
-		ExitBoxSettings.analytics.event.action_stay;
-
-	if (ExitBoxSettings.debugtoconsole) {
-		console.log(`exit_notifier_ga_track_link, tracking category(${category}), action(${action}), label(${url}).`);
-	}
-
-	ga('send', 'event', category, action, url, { 'transport': 'beacon' });
 }
